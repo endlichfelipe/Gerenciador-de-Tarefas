@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Verzel.TaskManager.WebAPI.Database;
+using Verzel.TaskManager.WebAPI.DTO;
 
 namespace Verzel.TaskManager.WebAPI
 {
@@ -30,14 +31,15 @@ namespace Verzel.TaskManager.WebAPI
             services.AddControllers();
 
             // Configure database
-            services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("apiDB"));
+            services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("apiDB"))
+                .SeedDatabase();
+
+            services.RegisterMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.SeedDatabase();
-
+        {   
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

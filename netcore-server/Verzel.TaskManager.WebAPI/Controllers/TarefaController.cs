@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Verzel.TaskManager.WebAPI.Database;
+using Verzel.TaskManager.WebAPI.DTO.Tarefa;
 using Verzel.TaskManager.WebAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,10 +16,12 @@ namespace Verzel.TaskManager.WebAPI.Controllers
     public class TarefaController : ControllerBase
     {
         private readonly ApiContext _context;
+        private readonly IMapper _mapper;
 
-        public TarefaController(ApiContext context)
+        public TarefaController(ApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/<TarefaController>
@@ -43,8 +47,10 @@ namespace Verzel.TaskManager.WebAPI.Controllers
 
         // POST api/<TarefaController>
         [HttpPost]
-        public async Task<ActionResult<Tarefa>> Post([FromBody] Tarefa tarefa)
+        public async Task<ActionResult<Tarefa>> Post([FromBody] CreateTarefaDTO tarefaDTO)
         {
+            var tarefa = _mapper.Map<Tarefa>(tarefaDTO);    
+
             await _context.Tarefas.AddAsync(tarefa);
             await _context.SaveChangesAsync();
 
@@ -53,8 +59,10 @@ namespace Verzel.TaskManager.WebAPI.Controllers
 
         // PUT api/<TarefaController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(long id, [FromBody] Tarefa tarefa)
+        public async Task<IActionResult> Put(long id, [FromBody] UpdateTarefaDTO tarefaDTO)
         {
+            var tarefa = _mapper.Map<Tarefa>(tarefaDTO);
+
             if (id != tarefa.Id)
             {
                 return BadRequest();

@@ -7,9 +7,9 @@ namespace Verzel.TaskManager.WebAPI.Database
     public static class DatabaseHelper
     {
 
-        public static IApplicationBuilder SeedDatabase(this IApplicationBuilder app)
+        public static void SeedDatabase(this IServiceCollection services)
         {
-            using (var scope = app.ApplicationServices.CreateScope())
+            using (var scope = services.BuildServiceProvider().CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ApiContext>();
                 context.Database.EnsureCreated();
@@ -19,8 +19,6 @@ namespace Verzel.TaskManager.WebAPI.Database
                 });
                 context.SaveChanges();
             }
-
-            return app;
         }
     }
 }

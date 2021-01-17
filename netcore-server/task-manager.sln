@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verzel.TaskManager.WebAPI", "Verzel.TaskManager.WebAPI\Verzel.TaskManager.WebAPI.csproj", "{30942DBD-3C49-4563-BA9B-097A9D511C93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verzel.TaskManager.WebAPI.Test", "Verzel.TaskManager.WebApi.Test\Verzel.TaskManager.WebAPI.Test.csproj", "{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{30942DBD-3C49-4563-BA9B-097A9D511C93}.Release|x64.Build.0 = Release|Any CPU
 		{30942DBD-3C49-4563-BA9B-097A9D511C93}.Release|x86.ActiveCfg = Release|Any CPU
 		{30942DBD-3C49-4563-BA9B-097A9D511C93}.Release|x86.Build.0 = Release|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Debug|x64.Build.0 = Debug|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Debug|x86.Build.0 = Debug|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Release|x64.ActiveCfg = Release|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Release|x64.Build.0 = Release|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Release|x86.ActiveCfg = Release|Any CPU
+		{D985C7FF-0BA6-4EA9-9B71-158D229AEDBD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
