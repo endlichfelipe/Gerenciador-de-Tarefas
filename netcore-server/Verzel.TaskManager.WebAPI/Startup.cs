@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Verzel.TaskManager.WebAPI.Database;
 
 namespace Verzel.TaskManager.WebAPI
 {
@@ -26,11 +28,16 @@ namespace Verzel.TaskManager.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Configure database
+            services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("apiDB"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.SeedDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
