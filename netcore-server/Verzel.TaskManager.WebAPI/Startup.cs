@@ -41,6 +41,8 @@ namespace Verzel.TaskManager.WebAPI
             // Configure mapper
             services.RegisterMapper();
 
+            services.AddScoped<ITokenService, TokenService>();
+
             ConfigureDatabase(services);
             ConfigureAuthentication(services);
         }

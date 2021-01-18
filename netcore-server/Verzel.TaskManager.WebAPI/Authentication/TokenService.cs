@@ -8,7 +8,7 @@ using Verzel.TaskManager.WebAPI.Models;
 
 namespace Verzel.TaskManager.WebAPI.Authentication
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private readonly JwtSettings _settings;
 
