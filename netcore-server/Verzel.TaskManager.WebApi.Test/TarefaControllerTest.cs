@@ -6,17 +6,18 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Verzel.TaskManager.WebAPI.Models;
-using Verzel.TaskManager.WebAPI.Test.Factory;
+using Verzel.TaskManager.WebAPI.Test.Extensions;
+using Verzel.TaskManager.WebAPI.Test.Fixture;
 using Xunit;
 
 namespace Verzel.TaskManager.WebAPI.Test
 {
     public class TarefaControllerTest
-         : IClassFixture<IntegrationTestWebApplicationFactory<Startup>>
+         : IClassFixture<TestFixture<Startup>>
     {
-        private readonly IntegrationTestWebApplicationFactory<Startup> _factory;
+        private readonly TestFixture<Startup> _factory;
 
-        public TarefaControllerTest(IntegrationTestWebApplicationFactory<Startup> factory)
+        public TarefaControllerTest(TestFixture<Startup> factory)
         {
             _factory = factory;
         }
@@ -26,7 +27,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Get_GetAllTarefas_Success()
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = "/api/tarefa";
 
             // Act
@@ -48,7 +49,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Get_GetTarefaById_Success(long id)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/{id}";
 
             // Act
@@ -66,7 +67,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Get_GetTarefaById_NotFound()
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/0";
 
             // Act
@@ -84,7 +85,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Post_CreateTarefa_Success(object payload)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa";
             var content = new StringContent(JsonConvert.SerializeObject(payload), encoding: Encoding.UTF8, mediaType: "application/json");
 
@@ -101,7 +102,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Post_CreateTarefa_ValidationError(object payload, string errorMessage)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa";
             var content = new StringContent(JsonConvert.SerializeObject(payload), encoding: Encoding.UTF8, mediaType: "application/json");
 
@@ -143,7 +144,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Put_UpdateTarefa_Success(long id, object payload)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/{id}";
             var content = new StringContent(JsonConvert.SerializeObject(payload), encoding: Encoding.UTF8, mediaType: "application/json");
 
@@ -159,7 +160,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Put_UpdateTarefa_ValidationError(long id, object payload, string errorMessage)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/{id}";
             var content = new StringContent(JsonConvert.SerializeObject(payload), encoding: Encoding.UTF8, mediaType: "application/json");
 
@@ -180,7 +181,7 @@ namespace Verzel.TaskManager.WebAPI.Test
             // Arrange
             var id = long.MaxValue;
             var payload = new { Id = 1, Descricao = "some description", DataConclusao = DateTime.Now, DataEntrega = DateTime.Now };
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/{id}";
             var content = new StringContent(JsonConvert.SerializeObject(payload), encoding: Encoding.UTF8, mediaType: "application/json");
 
@@ -198,7 +199,7 @@ namespace Verzel.TaskManager.WebAPI.Test
             // Arrange
             var id = long.MaxValue;
             var payload = new { Id = long.MaxValue, Descricao = "some description", DataConclusao = DateTime.Now, DataEntrega = DateTime.Now };
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/{id}";
             var content = new StringContent(JsonConvert.SerializeObject(payload), encoding: Encoding.UTF8, mediaType: "application/json");
 
@@ -241,7 +242,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Delete_DeleteTarefa_Success(long id)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/{id}";
 
             // Act
@@ -255,7 +256,7 @@ namespace Verzel.TaskManager.WebAPI.Test
         public async Task Delete_DeleteTarefa_NotFound()
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _factory.CreateClient().Authenticated();
             var url = $"/api/tarefa/0";
 
             // Act

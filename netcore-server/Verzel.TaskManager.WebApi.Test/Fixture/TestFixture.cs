@@ -8,9 +8,9 @@ using System.Linq;
 using Verzel.TaskManager.WebAPI.Database;
 using Verzel.TaskManager.WebAPI.Test.Helpers;
 
-namespace Verzel.TaskManager.WebAPI.Test.Factory
+namespace Verzel.TaskManager.WebAPI.Test.Fixture
 {
-    public class IntegrationTestWebApplicationFactory<TStartup>
+    public class TestFixture<TStartup>
         : WebApplicationFactory<TStartup> where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -35,7 +35,7 @@ namespace Verzel.TaskManager.WebAPI.Test.Factory
                     var scopedServices = scope.ServiceProvider;
                     var db = scopedServices.GetRequiredService<ApiContext>();
                     var logger = scopedServices
-                        .GetRequiredService<ILogger<IntegrationTestWebApplicationFactory<TStartup>>>();
+                        .GetRequiredService<ILogger<TestFixture<TStartup>>>();
 
                     db.Database.EnsureCreated();
 
