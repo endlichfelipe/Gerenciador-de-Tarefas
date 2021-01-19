@@ -19,8 +19,9 @@ export const tarefaSlice = createSlice({
             state.tarefas = action.payload;
         },
 
-        update: state => (id, tarefa) => {
-            console.log('Updating')
+        update: (state, action) => {
+            const tarefa = action.payload;
+            state.tarefas = state.tarefas.filter(t => t.id !== tarefa.id).push(tarefa);
         }
     }
 })
@@ -49,6 +50,15 @@ export const addAsync = (tarefa) => dispatch => {
             if (res.status >= 200 && res.status < 300)
                 dispatch(add(res.data));
             });
+}
+
+export const updateAsync = (id, tarefa) => dispatch => {
+    tarefa.id = parseInt(tarefa.id);
+    api.put(`tarefa/${id}`, tarefa)
+        .then(res => {
+            if (res.status >= 200 && res.status < 300)
+            dispatch(update(tarefa));
+        })
 }
 
 export const getAll = state => state.tarefas.tarefas;
