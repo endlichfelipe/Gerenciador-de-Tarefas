@@ -66,7 +66,6 @@ class Login extends React.Component {
         if (e.target.value.trim().length === 0)
             emailErrorText = 'Campo obrigatório'
         else if (!e.target.validity.valid) {
-            console.log('here')
             emailErrorText = 'Insira um formato válido de e-mail'
         }
 

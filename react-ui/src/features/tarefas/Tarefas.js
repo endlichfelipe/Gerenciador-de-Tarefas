@@ -1,5 +1,4 @@
 import React from 'react';
-import api from '../../services/api';
 import EditIcon from "@material-ui/icons/Edit";
 import Dashboard from '../../layout/Dashboard';
 import DeleteIcon from "@material-ui/icons/Delete";
