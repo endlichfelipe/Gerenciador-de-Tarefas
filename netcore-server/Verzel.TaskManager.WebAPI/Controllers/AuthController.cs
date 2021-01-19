@@ -22,7 +22,7 @@ namespace Verzel.TaskManager.WebAPI.Controllers
             _tokenService = tokenService;
         }
 
-        // POST api/<TarefaController>
+        // POST api/<AuthController>
         [HttpPost]
         public async Task<ActionResult<LoginResponseDTO>> Login([FromBody] LoginDTO loginDTO)
         {

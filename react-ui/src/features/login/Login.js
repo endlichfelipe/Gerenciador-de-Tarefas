@@ -1,4 +1,5 @@
 import React from 'react';
+import api from '../../services/api';
 import { LockOutlined } from '@material-ui/icons/'
 import { 
     Avatar,
@@ -9,6 +10,7 @@ import {
     Typography,
     withStyles
 } from '@material-ui/core';
+import { login } from '../../services/auth';
 
 const useStyles = theme => ({
     paper: {
@@ -32,7 +34,69 @@ const useStyles = theme => ({
   
 
 class Login extends React.Component {
-    authenticated = 'teste';
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            email: '',
+            emailErrorText: '',
+            senha: '',
+            senhaErrorText: '',
+        }
+    }
+
+    isValidEmail = () => {
+        return this.state.emailErrorText.trim().length === 0;
+    }
+
+    isValidSenha = () => {
+        return this.state.senhaErrorText.trim().length === 0;
+    }
+
+    handleChangeEmail = (e) => {
+        this.setState({ email: e.target.value })
+    }
+
+    handleChangeSenha = (e) => {
+        this.setState({ senha: e.target.value })
+    }
+
+    validateEmail = (e) => {
+        var emailErrorText = ''
+        if (e.target.value.trim().length === 0)
+            emailErrorText = 'Campo obrigatório'
+        else if (!e.target.validity.valid) {
+            console.log('here')
+            emailErrorText = 'Insira um formato válido de e-mail'
+        }
+
+        this.setState({ emailErrorText })
+    }
+
+    validateSenha = (e) => {
+        var senhaErrorText = ''
+        if (e.target.value.trim().length === 0)
+            senhaErrorText = 'Campo obrigatório'
+
+        this.setState({ senhaErrorText })
+    }
+
+    handleLogin = (e) => {
+        e.preventDefault();
+        
+        const { email, senha } = this.state;
+        const options = {
+            headers: { 'Content-Type': 'application/json' }
+        }
+        api.post('auth', { email, senha }, options)
+            .then(res => {
+                if (res.status === 200) {
+                    login(res.data.jwt)
+                    const { history } = this.props;
+                    history.push('/')
+                }
+            })
+    }
     
     render() {
         const {classes} = this.props;
@@ -52,8 +116,9 @@ class Login extends React.Component {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <form className={ classes.form } noValidate>
+                    <form className={ classes.form } noValidate onSubmit={this.handleLogin}>
                         <TextField
+                            type="email"
                             variant="outlined"
                             margin="normal"
                             required
@@ -63,7 +128,11 @@ class Login extends React.Component {
                             name="email"
                             autoComplete="email"
                             autoFocus
-                        />
+                            error={!this.isValidEmail()}
+                            helperText={this.state.emailErrorText}
+                            onChange={this.handleChangeEmail}
+                            onBlur={this.validateEmail}
+                            />
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -74,6 +143,10 @@ class Login extends React.Component {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            error={!this.isValidSenha()}
+                            helperText={this.state.senhaErrorText}
+                            onChange={this.handleChangeSenha}
+                            onBlur={this.validateSenha}
                         />
                         <Button
                             type="submit"
@@ -81,6 +154,7 @@ class Login extends React.Component {
                             variant="contained"
                             color="primary"
                             className={ classes.submit }
+                            disabled={!this.isValidEmail() || !this.isValidSenha()}
                         >
                             Sign In
                         </Button>

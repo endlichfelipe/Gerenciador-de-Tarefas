@@ -34,6 +34,7 @@ namespace Verzel.TaskManager.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
 
             // Strongly typed settings object
             services.Configure<JwtSettings>(Configuration.GetSection("Authentication:JwtBearer"));
@@ -94,7 +95,14 @@ namespace Verzel.TaskManager.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors(opt => 
+            {
+                opt.AllowAnyOrigin();
+                opt.AllowAnyMethod();
+                opt.AllowAnyHeader();
+            });
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
